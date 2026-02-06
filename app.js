@@ -1,7 +1,7 @@
 // ====== CONFIG ======
 // 1) Paste your Make webhook URL here (Make -> Webhooks -> Custom webhook).
 // Example: https://hook.us1.make.com/xxxxxxxxxxxxxxxxxxxxxxxx
-const MAKE_WEBHOOK_URL = "PASTE_YOUR_MAKE_WEBHOOK_URL_HERE";
+const MAKE_WEBHOOK_URL = "epl1v82htjmmks1uft9kf9s6dt56nucf@hook.us2.make.com";
 
 // 2) Currency formatting (CLP looks like $3.900). Change if you want.
 const CURRENCY = "CLP";
