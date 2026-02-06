@@ -10,9 +10,9 @@ const LOCALE = "es-CL";
 // 3) Products: edit this list (id must be unique).
 // Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
-  { id: "pino", name: "Empanada de Pino", price: 3900, image: "https://images.unsplash.com/photo-1604909052743-94e6d6c9a7e7?auto=format&fit=crop&w=1200&q=60" },
-  { id: "huevoqueso", name: "Empanada Huevo-Queso", price: 2900, image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=60" },
-  { id: "polloqueso", name: "Empanada Pollo-Queso", price: 1900, image: "https://images.unsplash.com/photo-1604908177522-8e1ea15a69f8?auto=format&fit=crop&w=1200&q=60" },
+  { id: "pino", name: "Empanada de Pino", price: 3900, image: "./images/imagen_testing.png" },
+  { id: "huevoqueso", name: "Empanada Huevo-Queso", price: 2900, image: "./images/imagen_testing.png" },
+  { id: "polloqueso", name: "Empanada Pollo-Queso", price: 1900, image: "./images/imagen_testing.png" },
   // Add more here...
 ];
 
