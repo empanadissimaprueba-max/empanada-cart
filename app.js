@@ -271,7 +271,10 @@ async function submitOrder(evt){
     return;
   }
 
+  const orderId = "ORD-" + Date.now();
+
   const payload = {
+    orderId,
     name,
     phone,
     note: note || "",
