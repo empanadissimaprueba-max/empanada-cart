@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Order Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🛒</div>
+      <div>
+        <div class="title">Place your order</div>
+        <div class="subtitle">Pick items, adjust quantities, then submit.</div>
+      </div>
+    </div>
+
+    <button id="toggleCartBtn" class="btn ghost" type="button" aria-controls="cartPanel" aria-expanded="false">
+      <span class="btnIcon">🧾</span>
+      <span>Cart</span>
+      <span id="cartCountBadge" class="badge" aria-label="Cart item count">0</span>
+    </button>
+  </header>
+
+  <main class="layout">
+    <section class="products" aria-label="Products">
+      <div class="sectionHeader">
+        <h2>Products</h2>
+        <p class="muted">Edit products in <code>app.js</code> (name, price, image).</p>
+      </div>
+      <div id="productGrid" class="grid" aria-live="polite"></div>
+    </section>
+
+    <aside id="cartPanel" class="cart" aria-label="Cart">
+      <div class="cartHeader">
+        <h2>Your Order</h2>
+        <button id="clearCartBtn" class="btn ghost small" type="button">Clear</button>
+      </div>
+
+      <div id="cartItems" class="cartItems"></div>
+
+      <div class="totals">
+        <div class="row">
+          <span>Subtotal</span>
+          <strong id="subtotal">0</strong>
+        </div>
+        <div class="row muted small">
+          <span>Total</span>
+          <strong id="total">0</strong>
+        </div>
+      </div>
+
+      <form id="checkoutForm" class="checkout" autocomplete="on">
+        <h3>Customer</h3>
+
+        <label class="field">
+          <span>Name</span>
+          <input id="customerName" name="name" type="text" placeholder="Your name" required />
+        </label>
+
+        <label class="field">
+          <span>Phone</span>
+          <input id="customerPhone" name="phone" type="tel" placeholder="+56 9 ..." required />
+        </label>
+
+        <label class="field">
+          <span>Note (optional)</span>
+          <input id="customerNote" name="note" type="text" placeholder="Anything we should know?" />
+        </label>
+
+        <button id="submitOrderBtn" class="btn primary" type="submit">
+          <span class="btnIcon">✅</span>
+          <span>Submit order</span>
+        </button>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+        <p class="tiny muted">
+          This sends your order to a Make webhook. Set your webhook URL in <code>app.js</code>.
+        </p>
+      </form>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span class="muted tiny">Built as a simple cart-style order page (no payments). Hosted as static files.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
