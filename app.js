@@ -284,6 +284,10 @@ async function submitOrder(evt){
   }
 
   const orderId = "ORD-" + Date.now();
+  
+  const timestampCL = new Date().toLocaleString("sv-SE", {
+    timeZone: "America/Santiago"
+  });
 
   const payload = {
     orderId,
@@ -295,7 +299,8 @@ async function submitOrder(evt){
     items,
     subtotal: cartSubtotal(),
     total: cartSubtotal(),
-    timestamp: new Date().toISOString()
+    timestampUTC: new Date().toISOString(),
+    timestampCL: timestampCL
   };
 
   try{
