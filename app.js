@@ -20,6 +20,10 @@ const PRODUCTS = [
 const MIN_QTY = 0;
 const MAX_QTY = 20;
 
+// Note limits
+const MAX_NOTE_LENGTH = 200;
+const NOTE_WARN_AT = 180; // when counter turns orange
+
 
 // ====== STATE ======
 /** cart: Map productId -> quantity */
@@ -258,8 +262,6 @@ async function submitOrder(evt){
   const name = document.getElementById("customerName").value.trim();
   const phone = document.getElementById("customerPhone").value.trim();
 
-  const MAX_NOTE_LENGTH = 200;
-
   let note = document.getElementById("customerNote").value.trim();
   if (note.length > MAX_NOTE_LENGTH) {
     note = note.slice(0, MAX_NOTE_LENGTH);
@@ -311,7 +313,11 @@ async function submitOrder(evt){
     statusEl.textContent = "Order sent! ✅";
     clearCart();
     evt.target.reset();
-    if (counterEl) counterEl.textContent = "0 / 200";
+    if (counterEl) {
+      counterEl.textContent = `0 / ${MAX_NOTE_LENGTH}`;
+      counterEl.classList.remove("warn", "danger");
+    }
+    if (noteEl) noteEl.style.height = "auto";
 
   } catch (err){
     statusEl.className = "status err";
@@ -328,17 +334,16 @@ document.getElementById("checkoutForm").addEventListener("submit", submitOrder);
 // Note counter + warning colors + auto-resize
 const noteEl = document.getElementById("customerNote");
 const counterEl = document.getElementById("noteCounter");
-const MAX_NOTE_LENGTH_UI = 200;
 
 if (noteEl && counterEl) {
   const updateNoteUI = () => {
     const len = noteEl.value.length;
 
-    counterEl.textContent = `${len} / ${MAX_NOTE_LENGTH_UI}`;
+    counterEl.textContent = `${len} / ${MAX_NOTE_LENGTH}`;
     counterEl.classList.remove("warn", "danger");
 
-    if (len >= 180 && len < MAX_NOTE_LENGTH_UI) counterEl.classList.add("warn");
-    if (len >= MAX_NOTE_LENGTH_UI) counterEl.classList.add("danger");
+    if (len >= NOTE_WARN_AT && len < MAX_NOTE_LENGTH) counterEl.classList.add("warn");
+    if (len >= MAX_NOTE_LENGTH) counterEl.classList.add("danger");
 
     noteEl.style.height = "auto";
     noteEl.style.height = noteEl.scrollHeight + "px";
