@@ -235,6 +235,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 }
 .field input:focus{border-color:rgba(88,214,201,.65)}
 
+.field textarea{
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.15);
+  color:var(--text);
+  padding:10px 12px;
+  outline:none;
+  resize:none;
+  min-height:40px;
+}
+.field textarea:focus{
+  border-color:rgba(88,214,201,.65);
+}
+
+
 .status{min-height:18px; margin:4px 0 0 0; color:var(--muted)}
 .status.ok{color:rgba(88,214,201,.95)}
 .status.err{color:var(--danger)}
