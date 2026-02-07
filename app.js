@@ -13,12 +13,15 @@ const PRODUCTS = [
   { id: "pino", name: "Empanada de Pino", price: 3900, image: "./images/imagen_testing.png" },
   { id: "huevoqueso", name: "Empanada Huevo-Queso", price: 2900, image: "./images/imagen_testing.png" },
   { id: "polloqueso", name: "Empanada Pollo-Queso", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "pino1", name: "Empanada de Pino1", price: 3900, image: "./images/imagen_testing.png" },
+  { id: "huevoqueso1", name: "Empanada Huevo-Queso1", price: 2900, image: "./images/imagen_testing.png" },
+  { id: "polloqueso1", name: "Empanada Pollo-Queso1", price: 1900, image: "./images/imagen_testing.png" },
   // Add more here...
 ];
 
 // Quantity limits
 const MIN_QTY = 0;
-const MAX_QTY = 20;
+const MAX_QTY = 2000;
 
 // Note limits
 const MAX_NOTE_LENGTH = 200;
