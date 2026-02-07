@@ -264,18 +264,19 @@ async function submitOrder(evt){
 
   const name = document.getElementById("customerName").value.trim();
   const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
 
   let note = document.getElementById("customerNote").value.trim();
   if (note.length > MAX_NOTE_LENGTH) {
     note = note.slice(0, MAX_NOTE_LENGTH);
   }
-
-
-  if (!name || !phone){
+  
+  if (!name || !phone || !address){
     statusEl.className = "status err";
-    statusEl.textContent = "Please enter name and phone.";
+    statusEl.textContent = "Please enter name, phone, and address.";
     return;
   }
+
 
   if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes("PASTE_YOUR_MAKE_WEBHOOK_URL_HERE")){
     statusEl.className = "status err";
@@ -293,6 +294,7 @@ async function submitOrder(evt){
     orderId,
     name,
     phone,
+    address,
     note: note || "",
     currency: CURRENCY,
     locale: LOCALE,
