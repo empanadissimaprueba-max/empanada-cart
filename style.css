@@ -249,6 +249,16 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   border-color:rgba(88,214,201,.65);
 }
 
+.note-counter{
+  display:block;
+  text-align:right;
+  font-size:0.75rem;
+  color: #9ca3af;
+  margin-top:4px;
+}
+.note-counter.warn{ color:#f59e0b; }
+.note-counter.danger{ color:#ef4444; }
+
 
 .status{min-height:18px; margin:4px 0 0 0; color:var(--muted)}
 .status.ok{color:rgba(88,214,201,.95)}
