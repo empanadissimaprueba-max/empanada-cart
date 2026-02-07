@@ -23,6 +23,7 @@ body{
     radial-gradient(900px 420px at 90% 20%, rgba(150,110,255,.10), transparent 60%),
     var(--bg);
   color:var(--text);
+  overflow-x: hidden;
 }
 
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
@@ -58,6 +59,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   padding:18px;
   max-width:1200px;
   margin:0 auto;
+  min-height: 100vh;
+  background: var(--bg);
 }
 
 .sectionHeader h2{margin:0 0 4px 0}
