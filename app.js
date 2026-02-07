@@ -324,6 +324,29 @@ async function submitOrder(evt){
 document.getElementById("clearCartBtn").addEventListener("click", clearCart);
 document.getElementById("checkoutForm").addEventListener("submit", submitOrder);
 
+// Note counter + warning colors + auto-resize
+const noteEl = document.getElementById("customerNote");
+const counterEl = document.getElementById("noteCounter");
+const MAX_NOTE_LENGTH_UI = 200;
+
+if (noteEl && counterEl) {
+  const updateNoteUI = () => {
+    const len = noteEl.value.length;
+
+    counterEl.textContent = `${len} / ${MAX_NOTE_LENGTH_UI}`;
+    counterEl.classList.remove("warn", "danger");
+
+    if (len >= 180 && len < MAX_NOTE_LENGTH_UI) counterEl.classList.add("warn");
+    if (len >= MAX_NOTE_LENGTH_UI) counterEl.classList.add("danger");
+
+    noteEl.style.height = "auto";
+    noteEl.style.height = noteEl.scrollHeight + "px";
+  };
+
+  noteEl.addEventListener("input", updateNoteUI);
+  updateNoteUI(); // initialize on load
+}
+
 // Mobile cart toggle (optional)
 const cartPanel = document.getElementById("cartPanel");
 const toggleCartBtn = document.getElementById("toggleCartBtn");
