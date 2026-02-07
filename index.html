@@ -69,8 +69,15 @@
 
         <label class="field">
           <span>Note (optional)</span>
-          <input id="customerNote" name="note" type="text" placeholder="Anything we should know?" />
+          <textarea
+            id="customerNote"
+            name="note"
+            placeholder="Anything we should know?"
+            maxlength="200"
+            rows="3"
+          ></textarea>
         </label>
+
 
         <button id="submitOrderBtn" class="btn primary" type="submit">
           <span class="btnIcon">✅</span>
