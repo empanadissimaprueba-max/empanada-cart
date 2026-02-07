@@ -244,6 +244,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   outline:none;
   resize:none;
   min-height:40px;
+  overflow: hidden;
 }
 .field textarea:focus{
   border-color:rgba(88,214,201,.65);
