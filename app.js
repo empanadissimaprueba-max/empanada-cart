@@ -311,6 +311,7 @@ async function submitOrder(evt){
     statusEl.textContent = "Order sent! ✅";
     clearCart();
     evt.target.reset();
+    if (counterEl) counterEl.textContent = "0 / 200";
 
   } catch (err){
     statusEl.className = "status err";
