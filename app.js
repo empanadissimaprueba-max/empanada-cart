@@ -257,7 +257,14 @@ async function submitOrder(evt){
 
   const name = document.getElementById("customerName").value.trim();
   const phone = document.getElementById("customerPhone").value.trim();
-  const note = document.getElementById("customerNote").value.trim();
+
+  const MAX_NOTE_LENGTH = 200;
+
+  let note = document.getElementById("customerNote").value.trim();
+  if (note.length > MAX_NOTE_LENGTH) {
+    note = note.slice(0, MAX_NOTE_LENGTH);
+  }
+
 
   if (!name || !phone){
     statusEl.className = "status err";
