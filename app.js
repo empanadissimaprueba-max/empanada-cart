@@ -191,7 +191,7 @@ function renderCart(){
   if (items.length === 0){
     const empty = document.createElement("div");
     empty.className = "muted small";
-    empty.textContent = "El carro está vacío. Agrega productos desde la lista.";
+    empty.textContent = "El carro está vacío, agrega productos desde la lista.";
     cartItemsEl.appendChild(empty);
   } else {
     for (const it of items){
