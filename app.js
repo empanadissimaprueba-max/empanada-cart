@@ -27,6 +27,9 @@ const MAX_QTY = 2000;
 const MAX_NOTE_LENGTH = 200;
 const NOTE_WARN_AT = 180; // when counter turns orange
 
+const MAX_TEXT_LENGTH = 78;
+const TEXT_WARN_AT = 65;
+
 
 // ====== STATE ======
 /** cart: Map productId -> quantity */
@@ -379,6 +382,7 @@ document.getElementById("checkoutForm").addEventListener("submit", submitOrder);
 const noteEl = document.getElementById("customerNote");
 const counterEl = document.getElementById("noteCounter");
 
+
 if (noteEl && counterEl) {
   const updateNoteUI = () => {
     const len = noteEl.value.length;
@@ -396,6 +400,35 @@ if (noteEl && counterEl) {
   noteEl.addEventListener("input", updateNoteUI);
   updateNoteUI(); // initialize on load
 }
+
+// Name + Address counters
+const nameEl = document.getElementById("customerName");
+const nameCounterEl = document.getElementById("nameCounter");
+
+const addressEl = document.getElementById("customerAddress");
+const addressCounterEl = document.getElementById("addressCounter");
+
+function attachTextCounter(inputEl, counterEl) {
+  if (!inputEl || !counterEl) return;
+
+  const updateUI = () => {
+    const len = inputEl.value.length;
+
+    counterEl.textContent = `${len} / ${MAX_TEXT_LENGTH}`;
+    counterEl.classList.remove("warn", "danger");
+
+    if (len >= TEXT_WARN_AT && len < MAX_TEXT_LENGTH) counterEl.classList.add("warn");
+    if (len >= MAX_TEXT_LENGTH) counterEl.classList.add("danger");
+  };
+
+  inputEl.addEventListener("input", updateUI);
+  updateUI(); // initialize on load
+}
+
+// Attach counters
+attachTextCounter(nameEl, nameCounterEl);
+attachTextCounter(addressEl, addressCounterEl);
+
 
 // Mobile cart toggle (optional)
 const cartPanel = document.getElementById("cartPanel");
