@@ -44,6 +44,31 @@ function formatMoney(value){
   }
 }
 
+function normalizeChilePhone(input) {
+  if (!input) return null;
+
+  // Remove everything except digits
+  let digits = input.replace(/\D/g, "");
+
+  // If starts with 56, keep it
+  if (digits.startsWith("56")) {
+    digits = digits.slice(2);
+  }
+
+  // If starts with 9 and has 9 digits → OK
+  if (digits.startsWith("9") && digits.length === 9) {
+    return "+56" + digits;
+  }
+
+  // If user typed only the last 8 digits → assume mobile
+  if (digits.length === 8) {
+    return "+569" + digits;
+  }
+
+  // Invalid
+  return null;
+}
+
 function clamp(n, lo, hi){
   return Math.max(lo, Math.min(hi, n));
 }
@@ -263,7 +288,8 @@ async function submitOrder(evt){
   }
 
   const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
+  const rawPhone = document.getElementById("customerPhone").value.trim();
+  const phone = normalizeChilePhone(rawPhone);
   const address = document.getElementById("customerAddress").value.trim();
 
   let note = document.getElementById("customerNote").value.trim();
@@ -271,11 +297,19 @@ async function submitOrder(evt){
     note = note.slice(0, MAX_NOTE_LENGTH);
   }
   
-  if (!name || !phone || !address){
+  if (!name || !address){
     statusEl.className = "status err";
-    statusEl.textContent = "Please enter name, phone, and address.";
+    statusEl.textContent = "Please enter name and address.";
     return;
   }
+  
+  if (!phone){
+    statusEl.className = "status err";
+    statusEl.textContent =
+      "Please enter a valid Chilean mobile number (example: +56912345678).";
+    return;
+  }
+
 
 
   if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes("PASTE_YOUR_MAKE_WEBHOOK_URL_HERE")){
