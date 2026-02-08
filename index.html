@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Order Menu</title>
+  <title>Menú de pedidos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -14,14 +14,14 @@
     <div class="brand">
       <div class="logo">🛒</div>
       <div>
-        <div class="title">Place your order</div>
-        <div class="subtitle">Pick items, adjust quantities, then submit.</div>
+        <div class="title">Haz tu pedido</div>
+        <div class="subtitle">Elige productos, selecciona cantidades y envía.</div>
       </div>
     </div>
 
     <button id="toggleCartBtn" class="btn ghost" type="button" aria-controls="cartPanel" aria-expanded="false">
       <span class="btnIcon">🧾</span>
-      <span>Cart</span>
+      <span>Carro</span>
       <span id="cartCountBadge" class="badge" aria-label="Cart item count">0</span>
     </button>
   </header>
@@ -29,16 +29,15 @@
   <main class="layout">
     <section class="products" aria-label="Products">
       <div class="sectionHeader">
-        <h2>Products</h2>
-        <p class="muted">Edit products in <code>app.js</code> (name, price, image).</p>
+        <h2>Productos</h2>
       </div>
       <div id="productGrid" class="grid" aria-live="polite"></div>
     </section>
 
     <aside id="cartPanel" class="cart" aria-label="Cart">
       <div class="cartHeader">
-        <h2>Your Order</h2>
-        <button id="clearCartBtn" class="btn ghost small" type="button">Clear</button>
+        <h2>Tu pedido</h2>
+        <button id="clearCartBtn" class="btn ghost small" type="button">Cancelar pedido</button>
       </div>
 
       <div id="cartItems" class="cartItems"></div>
@@ -58,13 +57,13 @@
         <h3>Customer</h3>
         
         <label class="field">
-          <span>Name</span>
+          <span>Nombre</span>
           <input
             id="customerName"
             name="name"
             type="text"
             maxlength="78"
-            placeholder="Your name"
+            placeholder="Escribe tu nombre o el tu negocio"
             required
             />
           <small id="nameCounter" class="note-counter">0 / 78</small>
@@ -72,19 +71,19 @@
 
         
         <label class="field">
-          <span>Phone</span>
+          <span>Número celular</span>
           <input id="customerPhone" name="phone" type="tel" required />
           <small class="tiny muted">Formatos aceptados: 56912345678 o +56912345678</small>
         </label>
         
         <label class="field">
-          <span>Address</span>
+          <span>Dirección de envío</span>
           <input
             id="customerAddress"
             name="address"
             type="text"
             maxlength="78"
-            placeholder="Street, number, city"
+            placeholder="Calle, número, ciudad/comuna..."
             required
             />
           <small id="addressCounter" class="note-counter">0 / 78</small>
@@ -93,11 +92,11 @@
 
 
         <label class="field">
-          <span>Note (optional)</span>
+          <span>Observación (opcional)</span>
           <textarea
             id="customerNote"
             name="note"
-            placeholder="Anything we should know?"
+            placeholder="¿Algo que debamos saber?"
             maxlength="200"
             rows="3"
           ></textarea>
@@ -108,13 +107,10 @@
 
         <button id="submitOrderBtn" class="btn primary" type="submit">
           <span class="btnIcon">✅</span>
-          <span>Submit order</span>
+          <span>Enviar pedido</span>
         </button>
 
         <p id="status" class="status" role="status" aria-live="polite"></p>
-        <p class="tiny muted">
-          This sends your order to a Make webhook. Set your webhook URL in <code>app.js</code>.
-        </p>
       </form>
     </aside>
   </main>
