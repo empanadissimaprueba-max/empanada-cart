@@ -119,6 +119,28 @@ const statusEl = document.getElementById("status");
 const checkoutForm = document.getElementById("checkoutForm");
 const submitBtn = checkoutForm?.querySelector('button[type="submit"]');
 
+function updateMinOrderUI() {
+  const totalItems = cartCount();
+
+  // Enable/disable button based on rule
+  if (submitBtn) {
+    submitBtn.disabled = totalItems < MIN_TOTAL_ITEMS;
+  }
+
+  // Show a message when there are some items but not enough
+  if (totalItems > 0 && totalItems < MIN_TOTAL_ITEMS) {
+    statusEl.className = "status err";
+    statusEl.textContent =
+      `Tu pedido debe contener ${MIN_TOTAL_ITEMS} o más productos (actualmente: ${totalItems}).`;
+  } else {
+    // Clear only this specific message
+    if (statusEl.textContent.includes("Tu pedido debe contener")) {
+      statusEl.className = "status";
+      statusEl.textContent = "";
+    }
+  }
+}
+
 
 function renderProducts(){
   productGrid.innerHTML = "";
@@ -259,9 +281,9 @@ function renderCart(){
   subtotalEl.textContent = formatMoney(subtotal);
   totalEl.textContent = formatMoney(subtotal); // same (no tax/shipping here)
   cartCountBadge.textContent = String(cartCount());
-  if (submitBtn) {
-    submitBtn.disabled = cartCount() < MIN_TOTAL_ITEMS;
-  }
+  
+  updateMinOrderUI();
+
 
 }
 
@@ -405,8 +427,9 @@ async function submitOrder(evt){
     statusEl.textContent = "Error al enviar el pedido. Revisa el Worker de Cloudflare y el escenario de Make.";
     console.error(err);
   } finally {
-    if (submitBtn) submitBtn.disabled = cartCount() < MIN_TOTAL_ITEMS;
+    updateMinOrderUI();
   }
+
 
 }
 
