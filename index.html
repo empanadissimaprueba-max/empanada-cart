@@ -56,29 +56,40 @@
 
       <form id="checkoutForm" class="checkout" autocomplete="on">
         <h3>Customer</h3>
-
+        
         <label class="field">
           <span>Name</span>
-          <input id="customerName" name="name" type="text" placeholder="Your name" required />
+          <input
+            id="customerName"
+            name="name"
+            type="text"
+            maxlength="78"
+            placeholder="Your name"
+            required
+            />
+          <small id="nameCounter" class="note-counter">0 / 78</small>
         </label>
+
         
         <label class="field">
           <span>Phone</span>
           <input id="customerPhone" name="phone" type="tel" required />
           <small class="tiny muted">Formatos aceptados: 56912345678 o +56912345678</small>
         </label>
-
-
+        
         <label class="field">
           <span>Address</span>
           <input
             id="customerAddress"
             name="address"
             type="text"
+            maxlength="78"
             placeholder="Street, number, city"
             required
             />
+          <small id="addressCounter" class="note-counter">0 / 78</small>
         </label>
+
 
 
         <label class="field">
