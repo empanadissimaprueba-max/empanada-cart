@@ -1,7 +1,7 @@
 // ====== CONFIG ======
 // 1) Paste your Make webhook URL here (Make -> Webhooks -> Custom webhook).
 // Example: https://hook.us1.make.com/xxxxxxxxxxxxxxxxxxxxxxxx
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/12rkb2bpud6d7bvqd47uw2htq14mo65d";
+const API_URL = "https://order-proxy.empanadissima-prueba.workers.dev";
 
 // 2) Currency formatting (CLP looks like $3.900). Change if you want.
 const CURRENCY = "CLP";
@@ -313,14 +313,6 @@ async function submitOrder(evt){
     return;
   }
 
-
-
-  if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.includes("PASTE_YOUR_MAKE_WEBHOOK_URL_HERE")){
-    statusEl.className = "status err";
-    statusEl.textContent = "Webhook URL not set. Paste your Make webhook URL in app.js.";
-    return;
-  }
-
   const orderId = "ORD-" + Date.now();
   
   const timestampCL = new Date().toLocaleString("sv-SE", {
@@ -344,16 +336,26 @@ async function submitOrder(evt){
 
   try{
     statusEl.textContent = "Sending…";
-
-    const res = await fetch(MAKE_WEBHOOK_URL, {
+    
+    if (!API_URL) {
+      statusEl.className = "status err";
+      statusEl.textContent = "API URL not set.";
+      return;
+    }
+    
+    const res = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(payload)
     });
 
+
+
     if (!res.ok){
       const txt = await res.text().catch(() => "");
-      throw new Error(`Webhook responded ${res.status}. ${txt}`.trim());
+      throw new Error(`API responded ${res.status}. ${txt}`.trim());
     }
 
     statusEl.className = "status ok";
@@ -368,7 +370,7 @@ async function submitOrder(evt){
 
   } catch (err){
     statusEl.className = "status err";
-    statusEl.textContent = "Error sending order. Check webhook URL + Make scenario is ON.";
+    statusEl.textContent = "Error sending order. Check Cloudflare Worker + Make scenario.";
     console.error(err);
   }
 }
