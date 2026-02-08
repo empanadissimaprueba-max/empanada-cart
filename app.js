@@ -113,6 +113,10 @@ const totalEl = document.getElementById("total");
 const cartCountBadge = document.getElementById("cartCountBadge");
 const statusEl = document.getElementById("status");
 
+const checkoutForm = document.getElementById("checkoutForm");
+const submitBtn = checkoutForm?.querySelector('button[type="submit"]');
+
+
 function renderProducts(){
   productGrid.innerHTML = "";
 
@@ -187,7 +191,7 @@ function renderCart(){
   if (items.length === 0){
     const empty = document.createElement("div");
     empty.className = "muted small";
-    empty.textContent = "Cart is empty. Add quantities from the products list.";
+    empty.textContent = "El carro está vacío. Agrega productos desde la lista.";
     cartItemsEl.appendChild(empty);
   } else {
     for (const it of items){
@@ -203,14 +207,14 @@ function renderCart(){
       nm.textContent = it.name;
       const meta = document.createElement("div");
       meta.className = "cartItemMeta";
-      meta.textContent = `${formatMoney(it.price)} each`;
+      meta.textContent = `${formatMoney(it.price)} c/u`;
       left.appendChild(nm);
       left.appendChild(meta);
 
       const right = document.createElement("div");
       right.style.textAlign = "right";
       right.innerHTML = `<div class="cartItemName">${formatMoney(it.subtotal)}</div>
-                         <div class="cartItemMeta">${it.qty} pcs</div>`;
+                         <div class="cartItemMeta">${it.qty} unid.</div>`;
 
       top.appendChild(left);
       top.appendChild(right);
@@ -286,7 +290,7 @@ async function submitOrder(evt){
   const items = cartItemsArray();
   if (items.length === 0){
     statusEl.className = "status err";
-    statusEl.textContent = "Add at least one product before submitting.";
+    statusEl.textContent = "Agrega al menos un producto antes de enviar el pedido.";
     return;
   }
 
@@ -302,14 +306,14 @@ async function submitOrder(evt){
   
   if (!name || !address){
     statusEl.className = "status err";
-    statusEl.textContent = "Please enter name and address.";
+    statusEl.textContent = "Por favor ingresa tu nombre y dirección.";
     return;
   }
   
   if (!phone){
     statusEl.className = "status err";
     statusEl.textContent =
-      "Please enter a valid Chilean mobile number (example: +56912345678).";
+      "Por favor ingresa un número móvil chileno válido (ejemplo: +56912345678).";
     return;
   }
 
@@ -335,11 +339,13 @@ async function submitOrder(evt){
   };
 
   try{
-    statusEl.textContent = "Sending…";
+    statusEl.textContent = "Enviando…";
+    if (submitBtn) submitBtn.disabled = true;
+
     
     if (!API_URL) {
       statusEl.className = "status err";
-      statusEl.textContent = "API URL not set.";
+      statusEl.textContent = "La URL del servidor no está configurada.";
       return;
     }
     
@@ -350,16 +356,24 @@ async function submitOrder(evt){
       },
       body: JSON.stringify(payload)
     });
-
-
-
-    if (!res.ok){
+    
+    if (!res.ok) {
+      // Mensaje especial para límite de solicitudes
+      if (res.status === 429) {
+        const retryAfter = res.headers.get("Retry-After");
+        statusEl.className = "status err";
+        statusEl.textContent = retryAfter
+          ? `Has realizado demasiadas solicitudes. Por favor espera ${retryAfter} segundos e inténtalo nuevamente.`
+          : "Has realizado demasiadas solicitudes. Por favor espera un momento e inténtalo nuevamente.";
+        return; // no lanzar error, solo mostrar el mensaje
+      }
+      // Error genérico para otros códigos
       const txt = await res.text().catch(() => "");
-      throw new Error(`API responded ${res.status}. ${txt}`.trim());
+      throw new Error(`La API respondió con el código ${res.status}. ${txt}`.trim());
     }
-
+    
     statusEl.className = "status ok";
-    statusEl.textContent = "Order sent! ✅";
+    statusEl.textContent = "¡Pedido enviado! ✅";
     clearCart();
     evt.target.reset();
     if (counterEl) {
@@ -370,8 +384,10 @@ async function submitOrder(evt){
 
   } catch (err){
     statusEl.className = "status err";
-    statusEl.textContent = "Error sending order. Check Cloudflare Worker + Make scenario.";
+    statusEl.textContent = "Error al enviar el pedido. Revisa el Worker de Cloudflare y el escenario de Make.";
     console.error(err);
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
   }
 }
 
