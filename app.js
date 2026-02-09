@@ -248,6 +248,8 @@ function renderCart(){
       input.max = MAX_QTY;
       input.value = it.qty;
       input.className = "qtyInput";
+
+      input.dataset.pid = it.id;
       
       input.addEventListener("input", () => {
         if (input.value === "") return; // user still typing
@@ -295,12 +297,41 @@ function setQty(productId, qty){
   const p = PRODUCTS.find(x => x.id === productId);
   if (!p) return;
 
+  // ✅ Save focus info if user is editing a qty input
+  const active = document.activeElement;
+  const wasEditingQty =
+    active &&
+    active.classList &&
+    active.classList.contains("qtyInput") &&
+    active.dataset &&
+    active.dataset.pid;
+
+  const keepPid = wasEditingQty ? active.dataset.pid : null;
+  const keepCursor = wasEditingQty ? active.selectionStart : null;
+
   const q = clamp(qty, MIN_QTY, MAX_QTY);
   if (q <= 0) cart.delete(productId);
   else cart.set(productId, q);
 
   renderAll();
+
+  // ✅ Restore focus + cursor position
+  if (keepPid) {
+    const newInput = document.querySelector(`.qtyInput[data-pid="${keepPid}"]`);
+    if (newInput) {
+      newInput.focus();
+      // Put cursor back (best-effort)
+      const pos = Math.min(keepCursor ?? newInput.value.length, newInput.value.length);
+      if (typeof newInput.setSelectionRange === "function") {
+        try {
+          newInput.setSelectionRange(pos, pos);
+        } catch {}
+      }
+
+    }
+  }
 }
+
 
 function clearCart(){
   cart.clear();
