@@ -21,7 +21,7 @@ const PRODUCTS = [
 
 // Quantity limits
 const MIN_QTY = 0;
-const MAX_QTY = 2000;
+const MAX_QTY = 999;
 // Order rules
 const MIN_TOTAL_ITEMS = 10;
 
