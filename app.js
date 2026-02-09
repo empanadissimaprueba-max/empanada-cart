@@ -146,7 +146,6 @@ function renderProducts(){
   productGrid.innerHTML = "";
 
   for (const p of PRODUCTS){
-    const qty = cart.get(p.id) || 0;
 
     const card = document.createElement("div");
     card.className = "card";
@@ -169,38 +168,26 @@ function renderProducts(){
     const price = document.createElement("p");
     price.className = "price";
     price.textContent = formatMoney(p.price);
+    
+    const addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.className = "btn primary small";
+    
+    const isAdded = cart.has(p.id);
+    addBtn.innerHTML = isAdded ? "✅ Añadido" : "Añadir";
+    
+    addBtn.addEventListener("click", () => {
+      if (!cart.has(p.id)) {
+        cart.set(p.id, 1);   // 👈 always start at 1
+      }
+      renderAll();
+    });
 
-    const qtyRow = document.createElement("div");
-    qtyRow.className = "qty";
+    
+body.appendChild(name);
+body.appendChild(price);
+body.appendChild(addBtn);
 
-    const controls = document.createElement("div");
-    controls.className = "qtyControls";
-    controls.setAttribute("role", "group");
-    controls.setAttribute("aria-label", `Quantity for ${p.name}`);
-
-    const minus = document.createElement("button");
-    minus.type = "button";
-    minus.textContent = "−";
-    minus.addEventListener("click", () => setQty(p.id, (cart.get(p.id) || 0) - 1));
-
-    const value = document.createElement("div");
-    value.className = "qtyValue";
-    value.textContent = String(qty);
-
-    const plus = document.createElement("button");
-    plus.type = "button";
-    plus.textContent = "+";
-    plus.addEventListener("click", () => setQty(p.id, (cart.get(p.id) || 0) + 1));
-
-    controls.appendChild(minus);
-    controls.appendChild(value);
-    controls.appendChild(plus);
-
-    qtyRow.appendChild(controls);
-
-    body.appendChild(name);
-    body.appendChild(price);
-    body.appendChild(qtyRow);
 
     card.appendChild(imgWrap);
     card.appendChild(body);
@@ -254,18 +241,28 @@ function renderCart(){
       minus.type = "button";
       minus.textContent = "−";
       minus.addEventListener("click", () => setQty(it.id, (cart.get(it.id) || 0) - 1));
+      
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = MIN_QTY;
+      input.max = MAX_QTY;
+      input.value = it.qty;
+      input.className = "qtyInput";
+      
+      input.addEventListener("input", () => {
+        if (input.value === "") return; // user still typing
+        const newQty = parseInt(input.value, 10);
+        setQty(it.id, isNaN(newQty) ? 0 : newQty);
+      });
 
-      const value = document.createElement("div");
-      value.className = "qtyValue";
-      value.textContent = String(it.qty);
-
+      
       const plus = document.createElement("button");
       plus.type = "button";
       plus.textContent = "+";
       plus.addEventListener("click", () => setQty(it.id, (cart.get(it.id) || 0) + 1));
-
+      
       controls.appendChild(minus);
-      controls.appendChild(value);
+      controls.appendChild(input);
       controls.appendChild(plus);
 
       qtyRow.appendChild(controls);
