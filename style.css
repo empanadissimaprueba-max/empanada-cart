@@ -133,6 +133,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   color:var(--text);
 }
 
+.qtyInput{
+  width:60px;
+  height:32px;
+  text-align:center;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.15);
+  color:var(--text);
+  font-weight:800;
+}
+.qtyInput:focus{
+  outline:none;
+  border-color:rgba(88,214,201,.65);
+}
+
 .btn{
   border:1px solid var(--border);
   background:rgba(255,255,255,.04);
