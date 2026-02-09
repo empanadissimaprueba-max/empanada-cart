@@ -38,6 +38,10 @@ const TEXT_WARN_AT = 65;
 /** cart: Map productId -> quantity */
 const cart = new Map();
 
+/** productIds that currently have an empty qty input */
+const invalidQty = new Set();
+
+
 
 // ====== HELPERS ======
 function formatMoney(value){
@@ -97,13 +101,13 @@ function cartSubtotal(){
 function cartItemsArray(){
   return PRODUCTS
     .map(p => ({...p, qty: cart.get(p.id) || 0}))
-    .filter(x => x.qty > 0)
+    .filter(x => x.qty > 0 || invalidQty.has(x.id))
     .map(x => ({
       id: x.id,
       name: x.name,
       qty: x.qty,
       price: x.price,
-      subtotal: x.qty * x.price
+      subtotal: (x.qty > 0 ? x.qty : 0) * x.price
     }));
 }
 
@@ -173,15 +177,17 @@ function renderProducts(){
     addBtn.type = "button";
     addBtn.className = "btn primary small";
     
-    const isAdded = cart.has(p.id);
+    const isAdded = cart.has(p.id) || invalidQty.has(p.id);
     addBtn.innerHTML = isAdded ? "✅ Añadido" : "Añadir";
     
     addBtn.addEventListener("click", () => {
       if (!cart.has(p.id)) {
-        cart.set(p.id, 1);   // 👈 always start at 1
+        invalidQty.delete(p.id);   // clear invalid state if it was empty
+        cart.set(p.id, 1);
       }
       renderAll();
     });
+
 
     
 body.appendChild(name);
@@ -222,11 +228,30 @@ function renderCart(){
       meta.textContent = `${formatMoney(it.price)} c/u`;
       left.appendChild(nm);
       left.appendChild(meta);
-
       const right = document.createElement("div");
       right.style.textAlign = "right";
+
+      
+      const qtyLine = invalidQty.has(it.id)
+        ? `<span class="qtyWarn">Ingrese cantidad</span>`
+        : `${it.qty} unid.`;
+      
       right.innerHTML = `<div class="cartItemName">${formatMoney(it.subtotal)}</div>
-                         <div class="cartItemMeta">${it.qty} unid.</div>`;
+                          <div class="cartItemMeta">${qtyLine}</div>`;
+      
+      const trash = document.createElement("button");
+      trash.type = "button";
+      trash.className = "trashBtn";
+      trash.title = "Quitar producto";
+      trash.textContent = "🗑️";
+      trash.addEventListener("click", () => {
+        invalidQty.delete(it.id);
+        cart.delete(it.id);
+        renderAll();
+      });
+      right.appendChild(trash);
+
+
 
       top.appendChild(left);
       top.appendChild(right);
@@ -252,10 +277,20 @@ function renderCart(){
       input.dataset.pid = it.id;
       
       input.addEventListener("input", () => {
-        if (input.value === "") return; // user still typing
+        // If user deletes everything, mark as invalid and re-render to show the warning
+        if (input.value.trim() === "") {
+          invalidQty.add(it.id);
+          setQty(it.id, 0);   // sets qty to 0 but keeps item visible via invalidQty
+          return;
+        }
+
+        
+        invalidQty.delete(it.id);
+        
         const newQty = parseInt(input.value, 10);
         setQty(it.id, isNaN(newQty) ? 0 : newQty);
       });
+
 
       
       const plus = document.createElement("button");
@@ -308,10 +343,16 @@ function setQty(productId, qty){
 
   const keepPid = wasEditingQty ? active.dataset.pid : null;
   const keepCursor = wasEditingQty ? active.selectionStart : null;
-
+  
   const q = clamp(qty, MIN_QTY, MAX_QTY);
-  if (q <= 0) cart.delete(productId);
-  else cart.set(productId, q);
+  
+  if (q > 0) {
+    invalidQty.delete(productId);   // ✅ qty is valid again
+    cart.set(productId, q);
+  } else {
+    cart.delete(productId);
+  }
+
 
   renderAll();
 
@@ -344,8 +385,8 @@ async function submitOrder(evt){
   evt.preventDefault();
   statusEl.className = "status";
   statusEl.textContent = "";
-
-  const items = cartItemsArray();
+  
+  const items = cartItemsArray().filter(x => x.qty > 0);
   if (items.length === 0){
     statusEl.className = "status err";
     statusEl.textContent = "Agrega al menos un producto antes de enviar el pedido.";
@@ -360,7 +401,12 @@ async function submitOrder(evt){
       `El pedido mínimo es de ${MIN_TOTAL_ITEMS} productos, actualmente tienes ${totalItems}.`;
     return;
   }
-
+  
+  if (invalidQty.size > 0) {
+    statusEl.className = "status err";
+    statusEl.textContent = "Hay productos sin cantidad. Ingresa cantidad o elimina el producto.";
+    return;
+  }
 
   const name = document.getElementById("customerName").value.trim();
   const rawPhone = document.getElementById("customerPhone").value.trim();
