@@ -148,6 +148,18 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   border-color:rgba(88,214,201,.65);
 }
 
+/* Remove number input spinners */
+.qtyInput::-webkit-outer-spin-button,
+.qtyInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qtyInput {
+  appearance: textfield;
+}
+
+
 .btn{
   border:1px solid var(--border);
   background:rgba(255,255,255,.04);
