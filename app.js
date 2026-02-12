@@ -428,7 +428,7 @@ async function submitOrder(evt){
   if (!phone){
     statusEl.className = "status err";
     statusEl.textContent =
-      "Por favor ingresa un número móvil chileno válido (ejemplo: +56912345678).";
+      "Por favor ingresa un número móvil chileno válido (ejemplo: 56912345678).";
     return;
   }
   
