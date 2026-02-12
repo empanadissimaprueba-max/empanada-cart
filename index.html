@@ -64,6 +64,7 @@
             type="text"
             maxlength="78"
             placeholder="Escribe tu nombre o el de tu negocio"
+            autocomplete="name"
             required
             />
           <small id="nameCounter" class="note-counter">0 / 78</small>
@@ -72,7 +73,14 @@
         
         <label class="field">
           <span>Número celular</span>
-          <input id="customerPhone" name="phone" type="tel" required />
+          <input
+            id="customerPhone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+            />
           <small class="tiny muted">Formato aceptado: 56912345678</small>
         </label>
         
@@ -99,6 +107,7 @@
             type="text"
             maxlength="78"
             placeholder="Calle, número, ciudad/comuna..."
+            autocomplete="street-address"
             required
             />
           <small id="addressCounter" class="note-counter">0 / 78</small>
