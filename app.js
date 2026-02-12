@@ -10,12 +10,12 @@ const LOCALE = "es-CL";
 // 3) Products: edit this list (id must be unique).
 // Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
-  { id: "pino", name: "Empanada de Pino", price: 3900, image: "./images/imagen_testing.png" },
-  { id: "huevoqueso", name: "Empanada Huevo-Queso", price: 2900, image: "./images/imagen_testing.png" },
-  { id: "polloqueso", name: "Empanada Pollo-Queso", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "pino1", name: "Empanada de Pino1", price: 3900, image: "./images/imagen_testing.png" },
-  { id: "huevoqueso1", name: "Empanada Huevo-Queso1", price: 2900, image: "./images/imagen_testing.png" },
-  { id: "polloqueso1", name: "Empanada Pollo-Queso1", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "11", name: "Empanada Pastelera", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "19", name: "Mechada Coctel", price: 500, image: "./images/imagen_testing.png" },
+  { id: "20", name: "Mechada Midi", price: 750, image: "./images/imagen_testing.png" },
+  { id: "15", name: "Empanada Malaya de Vacuno", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "13", name: "Empanada Pollo-Huevo", price: 1900, image: "./images/imagen_testing.png" },
   // Add more here...
 ];
 
