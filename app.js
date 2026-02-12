@@ -412,6 +412,7 @@ async function submitOrder(evt){
   const rawPhone = document.getElementById("customerPhone").value.trim();
   const phone = normalizeChilePhone(rawPhone);
   const address = document.getElementById("customerAddress").value.trim();
+  const email = document.getElementById("customerEmail").value.trim();
 
   let note = document.getElementById("customerNote").value.trim();
   if (note.length > MAX_NOTE_LENGTH) {
@@ -430,6 +431,15 @@ async function submitOrder(evt){
       "Por favor ingresa un número móvil chileno válido (ejemplo: +56912345678).";
     return;
   }
+  
+  // Basic email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if (!emailRegex.test(email)) {
+    statusEl.className = "status err";
+    statusEl.textContent = "Por favor ingresa un correo electrónico válido.";
+    return;
+  }
 
   const orderId = "ORD-" + Date.now();
   
@@ -441,6 +451,7 @@ async function submitOrder(evt){
     orderId,
     name,
     phone,
+    email,
     address,
     note: note || "",
     currency: CURRENCY,
