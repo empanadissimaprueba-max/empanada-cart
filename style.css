@@ -328,20 +328,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 .card{ background: var(--card); }
 .cartItem{ background: var(--card); }
 
-.hp{
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-}
-
-.hp input{
-  pointer-events: none;
-}
-
 @media (max-width: 980px){
   .layout{grid-template-columns: 1fr; }
   .cart{position:relative; top:auto; height:auto}
