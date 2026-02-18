@@ -269,27 +269,37 @@ function renderCart(){
       
       const input = document.createElement("input");
       input.type = "number";
+      input.inputMode = "numeric";
       input.min = MIN_QTY;
       input.max = MAX_QTY;
-      input.value = it.qty;
+      input.value = invalidQty.has(it.id) ? "" : it.qty;
       input.className = "qtyInput";
 
       input.dataset.pid = it.id;
       
       input.addEventListener("input", () => {
-        // If user deletes everything, mark as invalid and re-render to show the warning
+        // 1) If user deletes everything: mark invalid but DO NOT re-render
         if (input.value.trim() === "") {
           invalidQty.add(it.id);
-          setQty(it.id, 0);   // sets qty to 0 but keeps item visible via invalidQty
+          // Keep item visible and qty=0 in state without calling setQty/renderAll
+          cart.set(it.id, 0);
+          // Update totals + badge + min-order UI without recreating the input
+          const subtotal = cartSubtotal();
+          subtotalEl.textContent = formatMoney(subtotal);
+          totalEl.textContent = formatMoney(subtotal);
+          cartCountBadge.textContent = String(cartCount());
+          updateMinOrderUI();
+          
           return;
         }
-
         
+        // 2) Valid number typed again → normal behavior
         invalidQty.delete(it.id);
         
         const newQty = parseInt(input.value, 10);
         setQty(it.id, isNaN(newQty) ? 0 : newQty);
       });
+
 
 
       
