@@ -286,7 +286,7 @@ function renderCart(){
           cart.set(it.id, 0);
           // Update totals + badge + min-order UI without recreating the input
           
-          const qtyMetaEl = document.querySelector(`.qtyMeta[data-pid="${it.id}"]`);
+          const qtyMetaEl = right.querySelector(`.qtyMeta[data-pid="${it.id}"]`);
           if (qtyMetaEl) qtyMetaEl.innerHTML = `<span class="qtyWarn">Ingrese cantidad</span>`;
 
           const subtotal = cartSubtotal();
