@@ -237,7 +237,8 @@ function renderCart(){
         : `${it.qty} unid.`;
       
       right.innerHTML = `<div class="cartItemName">${formatMoney(it.subtotal)}</div>
-                          <div class="cartItemMeta">${qtyLine}</div>`;
+                          <div class="cartItemMeta"><span class="qtyMeta" data-pid="${it.id}">${qtyLine}</span></div>`;
+
       
       const trash = document.createElement("button");
       trash.type = "button";
@@ -284,6 +285,10 @@ function renderCart(){
           // Keep item visible and qty=0 in state without calling setQty/renderAll
           cart.set(it.id, 0);
           // Update totals + badge + min-order UI without recreating the input
+          
+          const qtyMetaEl = document.querySelector(`.qtyMeta[data-pid="${it.id}"]`);
+          if (qtyMetaEl) qtyMetaEl.innerHTML = `<span class="qtyWarn">Ingrese cantidad</span>`;
+
           const subtotal = cartSubtotal();
           subtotalEl.textContent = formatMoney(subtotal);
           totalEl.textContent = formatMoney(subtotal);
