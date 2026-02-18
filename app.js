@@ -236,8 +236,15 @@ function renderCart(){
         ? `<span class="qtyWarn">Ingrese cantidad</span>`
         : `${it.qty} unid.`;
       
-      right.innerHTML = `<div class="cartItemName">${formatMoney(it.subtotal)}</div>
-                          <div class="cartItemMeta"><span class="qtyMeta" data-pid="${it.id}">${qtyLine}</span></div>`;
+      right.innerHTML = `
+        <div class="cartItemName">
+          <span class="lineSubtotal" data-pid="${it.id}">${formatMoney(it.subtotal)}</span>
+        </div>
+        <div class="cartItemMeta">
+          <span class="qtyMeta" data-pid="${it.id}">${qtyLine}</span>
+        </div>
+        `;
+
 
       
       const trash = document.createElement("button");
@@ -288,6 +295,10 @@ function renderCart(){
           
           const qtyMetaEl = right.querySelector(`.qtyMeta[data-pid="${it.id}"]`);
           if (qtyMetaEl) qtyMetaEl.innerHTML = `<span class="qtyWarn">Ingrese cantidad</span>`;
+          
+          const lineSubtotalEl = right.querySelector(`.lineSubtotal[data-pid="${it.id}"]`);
+          if (lineSubtotalEl) lineSubtotalEl.textContent = formatMoney(0);
+
 
           const subtotal = cartSubtotal();
           subtotalEl.textContent = formatMoney(subtotal);
