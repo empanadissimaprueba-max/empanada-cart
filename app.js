@@ -278,6 +278,7 @@ function renderCart(){
       const input = document.createElement("input");
       input.type = "number";
       input.inputMode = "numeric";
+      input.setAttribute("autocomplete", "off");
       input.min = MIN_QTY;
       input.max = MAX_QTY;
       input.value = invalidQty.has(it.id) ? "" : it.qty;
