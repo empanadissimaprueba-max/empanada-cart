@@ -404,6 +404,12 @@ function setQty(productId, qty){
 function clearCart(){
   cart.clear();
   invalidQty.clear();
+  
+  if (statusEl) {
+    statusEl.className = "status";
+    statusEl.textContent = "";
+  }
+  
   renderAll();
 }
 
