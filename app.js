@@ -403,6 +403,7 @@ function setQty(productId, qty){
 
 function clearCart(){
   cart.clear();
+  invalidQty.clear();
   renderAll();
 }
 
