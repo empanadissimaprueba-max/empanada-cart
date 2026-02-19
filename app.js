@@ -401,15 +401,15 @@ function setQty(productId, qty){
 }
 
 
-function clearCart(){
+function clearCart({ clearStatus = true } = {}) {
   cart.clear();
   invalidQty.clear();
-  
-  if (statusEl) {
+
+  if (clearStatus && statusEl) {
     statusEl.className = "status";
     statusEl.textContent = "";
   }
-  
+
   renderAll();
 }
 
@@ -533,7 +533,7 @@ async function submitOrder(evt){
     
     statusEl.className = "status ok";
     statusEl.textContent = "¡Pedido enviado! ✅";
-    clearCart();
+    clearCart({ clearStatus: false }); // keep success message visible
     evt.target.reset();
     if (counterEl) {
       counterEl.textContent = `0 / ${MAX_NOTE_LENGTH}`;
