@@ -11,7 +11,7 @@ const LOCALE = "es-CL";
 // Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
   { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "18", name: "Empanada de Manzada Tradicional", price: 1000, image: "./images/imagen_testing.png" },
+  { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/imagen_testing.png" },
   { id: "10", name: "Empanada de Mechada Tradicional", price: 1900, image: "./images/imagen_testing.png" },
   { id: "11", name: "Empanada de Pastelera Tradicional", price: 1900, image: "./images/imagen_testing.png" },
   { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/imagen_testing.png" },
