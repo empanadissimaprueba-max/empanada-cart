@@ -74,6 +74,43 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
   box-shadow:var(--shadow);
 }
 
+/* ===== Category Selector ===== */
+.categoryBar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 0 0 14px 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,.02);
+}
+
+.catTab{
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.catTab:hover{
+  border-color: rgba(255,255,255,.22);
+}
+
+.catTab:focus{
+  outline: none;
+  border-color: rgba(88,214,201,.65);
+}
+
+.catTab.isActive{
+  background: linear-gradient(180deg, rgba(88,214,201,.22), rgba(88,214,201,.10));
+  border-color: rgba(88,214,201,.55);
+}
+
 .grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
