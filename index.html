@@ -27,10 +27,18 @@
   </header>
 
   <main class="layout">
-    <section class="products" aria-label="Products">
+    <section class="products" aria-label="Productos">
       <div class="sectionHeader">
         <h2>Productos</h2>
       </div>
+      
+      <!-- Category selector goes HERE -->
+      <div class="categoryBar" role="tablist" aria-label="Categorías">
+        <button class="catTab isActive" type="button" role="tab" aria-selected="true" data-cat="Tradicional">Tradicional</button>
+        <button class="catTab" type="button" role="tab" aria-selected="false" data-cat="Midi">Midi</button>
+        <button class="catTab" type="button" role="tab" aria-selected="false" data-cat="Cóctel">Cóctel</button>
+      </div>
+      
       <div id="productGrid" class="grid" aria-live="polite"></div>
     </section>
 
