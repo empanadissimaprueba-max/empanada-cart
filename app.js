@@ -10,15 +10,15 @@ const LOCALE = "es-CL";
 // 3) Products: edit this list (id must be unique).
 // Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
-  { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/imagen_testing.png" },
-  { id: "10", name: "Empanada de Mechada Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "11", name: "Empanada de Pastelera Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "13", name: "Empanada de Pollo-Huevo Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "14", name: "Empanada de Pollo-Queso Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "17", name: "Empanada Napolitana Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "16", name: "Empanada Vegetariana Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "10", name: "Empanada de Mechada Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "11", name: "Empanada de Pastelera Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "13", name: "Empanada de Pollo-Huevo Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "14", name: "Empanada de Pollo-Queso Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "17", name: "Empanada Napolitana Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Midi" },
+  { id: "16", name: "Empanada Vegetariana Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Cóctel" },
   // Add more here...
 ];
 
@@ -43,6 +43,8 @@ const cart = new Map();
 
 /** productIds that currently have an empty qty input */
 const invalidQty = new Set();
+
+let currentCategory = "Tradicional"; // default best-seller
 
 
 
@@ -126,6 +128,26 @@ const statusEl = document.getElementById("status");
 const checkoutForm = document.getElementById("checkoutForm");
 const submitBtn = checkoutForm?.querySelector('button[type="submit"]');
 
+const catTabs = document.querySelectorAll(".catTab");
+
+function setActiveCategory(cat){
+  currentCategory = cat;
+  
+  catTabs.forEach(btn => {
+    const isActive = btn.dataset.cat === cat;
+    btn.classList.toggle("isActive", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+  
+}
+
+catTabs.forEach(btn => {
+  btn.addEventListener("click", () => {
+    setActiveCategory(btn.dataset.cat);
+    renderProducts(); // or renderAll() if you prefer
+  });
+});
+
 function updateMinOrderUI() {
   const totalItems = cartCount();
 
@@ -151,8 +173,10 @@ function updateMinOrderUI() {
 
 function renderProducts(){
   productGrid.innerHTML = "";
-
-  for (const p of PRODUCTS){
+  
+  const visibleProducts = PRODUCTS.filter(p => (p.category || "Tradicional") === currentCategory);
+  
+  for (const p of visibleProducts){
 
     const card = document.createElement("div");
     card.className = "card";
@@ -622,4 +646,5 @@ toggleCartBtn.addEventListener("click", () => {
 });
 
 // Initial render
+setActiveCategory(currentCategory);
 renderAll();
