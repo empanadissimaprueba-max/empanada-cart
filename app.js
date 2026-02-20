@@ -10,12 +10,15 @@ const LOCALE = "es-CL";
 // 3) Products: edit this list (id must be unique).
 // Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
+  { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "18", name: "Empanada de Manzada Tradicional", price: 1000, image: "./images/imagen_testing.png" },
+  { id: "10", name: "Empanada de Mechada Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "11", name: "Empanada de Pastelera Tradicional", price: 1900, image: "./images/imagen_testing.png" },
   { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "11", name: "Empanada Pastelera", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "19", name: "Mechada Coctel", price: 500, image: "./images/imagen_testing.png" },
-  { id: "20", name: "Mechada Midi", price: 750, image: "./images/imagen_testing.png" },
-  { id: "15", name: "Empanada Malaya de Vacuno", price: 1900, image: "./images/imagen_testing.png" },
-  { id: "13", name: "Empanada Pollo-Huevo", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "13", name: "Empanada de Pollo-Huevo Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "14", name: "Empanada de Pollo-Queso Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "17", name: "Empanada Napolitana Tradicional", price: 1900, image: "./images/imagen_testing.png" },
+  { id: "16", name: "Empanada Vegetariana Tradicional", price: 1900, image: "./images/imagen_testing.png" },
   // Add more here...
 ];
 
