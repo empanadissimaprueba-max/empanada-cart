@@ -1,14 +1,13 @@
 // ====== CONFIG ======
-// 1) Paste your Make webhook URL here (Make -> Webhooks -> Custom webhook).
+// 1) Paste the Make webhook URL here (Make -> Webhooks -> Custom webhook).
 // Example: https://hook.us1.make.com/xxxxxxxxxxxxxxxxxxxxxxxx
 const API_URL = "https://order-proxy.empanadissima-prueba.workers.dev";
 
-// 2) Currency formatting (CLP looks like $3.900). Change if you want.
+// 2) Currency formatting (CLP looks like $3.900).
 const CURRENCY = "CLP";
 const LOCALE = "es-CL";
 
 // 3) Products: edit this list (id must be unique).
-// Tip: You can keep placeholder images while testing.
 const PRODUCTS = [
   { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/imagen_testing.png", category: "Tradicional" },
   { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/imagen_testing.png", category: "Tradicional" },
