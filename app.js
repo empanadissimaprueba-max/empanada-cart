@@ -34,6 +34,9 @@ const PRODUCTS = [
   { id: "24", name: "Empanada de Pollo-Queso Cóctel", price: 500, image: "./images/POLLO QUESO FONDO NARANJO.jpg", category: "Cóctel" },
   { id: "27", name: "Empanada Napolitana Cóctel", price: 500, image: "./images/NAPOLITANA FONDO NARANJO.jpg", category: "Cóctel" },
   { id: "26", name: "Empanada Vegetariana Cóctel", price: 500, image: "./images/VEGETARIANA FONDO NARANJO.jpg", category: "Cóctel" },
+  { id: "38", name: "Chaparrita Queso", price: 1500, image: "./images/PRODUCTO SIN IMAGEN.jpg", category: "Cóctel" },
+  { id: "40", name: "Pan Campesino", price: 1700, image: "./images/PRODUCTO SIN IMAGEN.jpg", category: "Cóctel" },
+  { id: "39", name: "Pan Hallulla", price: 1600, image: "./images/PRODUCTO SIN IMAGEN.jpg", category: "Cóctel" },
   // Add more here...
 ];
 
