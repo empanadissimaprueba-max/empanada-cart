@@ -10,7 +10,7 @@ const LOCALE = "es-CL";
 // 3) Products: edit this list (id must be unique).
 const PRODUCTS = [
   { id: "15", name: "Empanada de Malaya de Vacuno Tradicional", price: 1900, image: "./images/MALAYA FONDO NARANJO.jpg", category: "Tradicional" },
-  { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/imagen_testing.png", category: "Tradicional" },
+  { id: "18", name: "Empanada de Manzana Tradicional", price: 1000, image: "./images/MANZANA FONDO NARANJO.jpg", category: "Tradicional" },
   { id: "10", name: "Empanada de Mechada Tradicional", price: 1900, image: "./images/MECHADA FONDO NARANJO.jpg", category: "Tradicional" },
   { id: "11", name: "Empanada de Pastelera Tradicional", price: 1900, image: "./images/PASTELERA FONDO NARANJO.jpg", category: "Tradicional" },
   { id: "12", name: "Empanada de Pino Tradicional", price: 1900, image: "./images/PINO FONDO NARANJO.jpg", category: "Tradicional" },
