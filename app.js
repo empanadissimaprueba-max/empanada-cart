@@ -63,6 +63,7 @@ const cart = new Map();
 const invalidQty = new Set();
 
 let currentCategory = "Tradicional"; // default best-seller
+let submitting = false;
 
 
 
@@ -462,15 +463,20 @@ function clearCart({ clearStatus = true } = {}) {
 // ====== SUBMIT ORDER ======
 async function submitOrder(evt){
   evt.preventDefault();
-  statusEl.className = "status";
-  statusEl.textContent = "";
   
-  const items = cartItemsArray().filter(x => x.qty > 0);
-  if (items.length === 0){
-    statusEl.className = "status err";
-    statusEl.textContent = "Agrega al menos un producto antes de enviar el pedido.";
-    return;
-  }
+  if (submitting) return;
+  submitting = true;
+  
+  try {
+    statusEl.className = "status";
+    statusEl.textContent = "";
+    
+    const items = cartItemsArray().filter(x => x.qty > 0);
+    if (items.length === 0){
+      statusEl.className = "status err";
+      statusEl.textContent = "Agrega al menos un producto antes de enviar el pedido.";
+      return;
+    }
   
   const totalItems = cartCount();
   
@@ -545,17 +551,15 @@ async function submitOrder(evt){
     timestampUTC: new Date().toISOString(),
     timestampCL: timestampCL
   };
-
-  try{
-    statusEl.textContent = "Enviando…";
-    if (submitBtn) submitBtn.disabled = true;
-
-    
-    if (!API_URL) {
-      statusEl.className = "status err";
-      statusEl.textContent = "La URL del servidor no está configurada.";
-      return;
-    }
+  
+  statusEl.textContent = "Enviando…";
+  if (submitBtn) submitBtn.disabled = true;
+  
+  if (!API_URL) {
+    statusEl.className = "status err";
+    statusEl.textContent = "La URL del servidor no está configurada.";
+    return;
+  }
     
     const res = await fetch(API_URL, {
       method: "POST",
@@ -595,6 +599,8 @@ async function submitOrder(evt){
     statusEl.textContent = "Error al enviar el pedido. Revisa el Worker de Cloudflare y el escenario de Make.";
     console.error(err);
   } finally {
+    submitting = false;
+    if (submitBtn) submitBtn.disabled = false;
     updateMinOrderUI();
   }
 
